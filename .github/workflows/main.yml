@@ -3,7 +3,6 @@ name: CI
 
 on: [push]
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,6 +20,7 @@ jobs:
         API_KEY: ${{ secrets.API_KEY }}
       run: |
         FILE=./data/`date +"%Y%m%d"`.json
+        DATE=`date +"%Y%m%d"`
         if [ -f "$FILE" ]; then
             echo "$FILE exists. Done for today."
         else
@@ -46,7 +46,7 @@ jobs:
         git config user.name "amitmbee"
         if [[ `git status --porcelain` ]]; then
           git add .
-          git commit -a -m "add weather data"
+          git commit -a -m 'add weather data for "$DATE"'
           git remote rm origin
           git remote add origin https://amitmbee:$PUSH_TOKEN@github.com/amitmbee/vijayapura-historical-weather.git
           git push origin HEAD:master
